@@ -4,7 +4,12 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "primary-accent": "#d8554d",
+        "secondary-accent": "#522B9A"
+      }
+    },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-motion')],
 }
