@@ -9,22 +9,37 @@ export class MembersRepository {
       .get(id);
   }
 
-  public listPage(page: number, pageSize: number): PaginatedList<Member> {
+  public listPageFilteringEmailAndAge(page: number, pageSize: number, email: string | undefined, phone: string | undefined): PaginatedList<Member> {
     try {
-      const members = db
-        .prepare<[number, number], Member>(
-          "SELECT * FROM members LIMIT ? OFFSET ?"
-        )
-        .all(pageSize, (page - 1) * pageSize);
+      //This should not be applied in repository layer, just for simplicity..
 
-      const count = db
-        .prepare<[], number>("SELECT COUNT(1) as count FROM members")
-        .get()!;
+      let query = "SELECT * FROM members";
+      query = this.addFilters(query, email, phone);
+      query = query + ` LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`;
+      
+      let countQuery = "SELECT COUNT(1) as count FROM members";
+      countQuery = this.addFilters(countQuery, email, phone);
+
+      const members = db.prepare<[], Member>(query).all();
+      const count = db.prepare<[], { count: number}>(countQuery).get()!.count;
 
       return PaginatedList.forArray(members, count, page);
+
     } catch (err) {
       return PaginatedList.empty;
     }
+  }
+
+  private addFilters(query: string, email: string | undefined, phone: string | undefined) {
+    if (email && phone) {
+      query = query + ` WHERE email LIKE '%${email}%' AND phone LIKE '%${phone}%'`;
+    } else if (phone) {
+      query = query + ` WHERE phone LIKE '%${phone}%'`
+    } else if (email) {
+      query = query + ` WHERE email LIKE '%${email}%'`
+    }
+
+    return query;
   }
 
   public save(member: Member): boolean {
