@@ -11,5 +11,5 @@ import { TailwindService } from '../../services/tailwind.service';
 export class ButtonComponent {
   readonly tailwindService = inject(TailwindService);
 
-  @Input() class: string = '';
+  @Input() className: string = '';
 }
