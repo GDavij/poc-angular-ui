@@ -1,13 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, TemplateRef } from '@angular/core';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { TailwindService } from '../../services/tailwind.service';
+import { TableDefintion } from './table.models';
 
 @Component({
   selector: 'Table',
-  imports: [],
+  standalone: true,
+  imports: [NgTemplateOutlet, CommonModule],
   templateUrl: './table.component.html',
-  styleUrl: './table.component.scss'
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent {
-  readonly tailwindService = inject(TailwindService)
+  @Input() className: string = '';
+  
+  @Input({ required: true }) tableDefinition!: TableDefintion<any>;
+  @Input({ required: true }) headerRef!: TemplateRef<any>;
+  @Input({ required: true}) bodyRef!: TemplateRef<any>;
 
+  readonly tailwindService = inject(TailwindService);
 }

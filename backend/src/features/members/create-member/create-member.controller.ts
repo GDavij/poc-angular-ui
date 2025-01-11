@@ -5,7 +5,7 @@ import { HttpResult } from "@models/results";
 import { Member } from "@models/member";
 
 export function createMemberController(req: FastifyRequest, res: FastifyReply) {
-  const { body: payload } = createMemberSchema.parse(req.body);
+  const { body: payload } = createMemberSchema.parse(req);
 
   const repository = new MembersRepository();
 

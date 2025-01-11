@@ -5,8 +5,45 @@
     </div>
 </section>
 
-<section class="w-full flex flex-col gap-6">
-    <section class="w-full flex flex-wrap bg-white min-h-32 shadow-md rounded-md"></section>
+<section class="w-full h-20">
+    <Table [tableDefinition]="tableDefinition" [headerRef]="headerTemplate" [bodyRef]="bodyTemplate">
+        <ng-template #headerTemplate let-headers="headers">
+            <TableHeader [headers]="headers" [headerCell]="HeaderCellTemplate">
+                
+                <ng-template #HeaderCellTemplate let-cell="cell">
+                    <TableCell className="text-slate-900 font-semibold" [cellRef]="HeaderCellItemTemplate" [cell]="cell">
 
-    <Table class="w-full"></Table>
+
+                        <ng-template #HeaderCellItemTemplate let-cell="cell">
+                            <span>{{ cell.label }}</span>
+                        </ng-template>
+    
+
+                    </TableCell>
+                </ng-template>
+    
+
+            </TableHeader>
+       </ng-template>
+
+       <ng-template #bodyTemplate let-rows="rows">
+            <TableBody [rowRef]="rowTemplate" [rows]="rows">
+                <ng-template #rowTemplate let-row="row">
+                    <TableRow (click)="openInfoModal(row)" className="cursor-pointer">
+                        <TableCell [cellRef]="defaultCellTemplate" [cell]="row.name"></TableCell>
+                        <TableCell [cellRef]="defaultCellTemplate" [cell]="row.email"></TableCell>
+                        <TableCell [cellRef]="defaultCellTemplate" [cell]="row.phone"></TableCell>
+
+
+                        <ng-template #defaultCellTemplate let-cell="cell">
+                            <span>{{ cell }}</span>
+                        </ng-template>
+                    </TableRow>
+                </ng-template>
+            </TableBody>
+       </ng-template>
+
+    </Table>
+
+    
 </section>

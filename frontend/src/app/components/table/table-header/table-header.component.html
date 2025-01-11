@@ -1,0 +1,6 @@
+<thead [class]="tailwindService.merge('w-full grid-cols-4 grid motion-preset-slide-up-lg motion-duration-500', className)">
+    <ng-container *ngFor="let header of headers">
+      <ng-container *ngTemplateOutlet="headerCell; context: { cell: header }"></ng-container>
+    </ng-container>
+  </thead>
+  

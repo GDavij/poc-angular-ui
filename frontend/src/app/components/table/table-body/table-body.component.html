@@ -1,0 +1,5 @@
+<tbody [class]="tailwindService.merge('', className)">
+    <ng-container *ngFor="let row of rows">
+        <ng-container *ngTemplateOutlet="rowRef; context: { row: row }"/>
+    </ng-container>
+</tbody>

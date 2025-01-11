@@ -1,1 +1,8 @@
-<table [class]="tailwindService.merge('w-full min-h-8 bg-white shadow-md rounded-md')"></table>
+<table [class]="tailwindService.merge('flex-grow-1 flex-shrink-0 container min-h-8 bg-white shadow-md rounded-md flex flex-col px-2 py-4', className)">
+      <ng-container *ngTemplateOutlet="headerRef; context: { headers: tableDefinition.headers }"></ng-container>
+    
+      <div class="w-full h-[0.2rem] my-2 bg-primary-accent rounded-md"></div>
+        
+      <ng-container *ngTemplateOutlet="bodyRef; context: {rows: tableDefinition.body}"/>
+</table>
+  
