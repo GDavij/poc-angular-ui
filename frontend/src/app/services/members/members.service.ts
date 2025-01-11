@@ -12,8 +12,8 @@ export class MembersService {
 
   constructor(private readonly _httpClient: HttpClient) { }
 
-  list(name: string, phone: string, page: number, pageSize: number) {
-    return this._httpClient.get<ApiResult<PaginatedList<Member>>>(`${this._baseUrl}/api/members?${this.toQueryParams({name, phone, page, pageSize})}`);
+  list(email: string, phone: string, page: number, pageSize: number) {
+    return this._httpClient.get<ApiResult<PaginatedList<Member>>>(`${this._baseUrl}/api/members?${this.toQueryParams({email, phone, page, pageSize})}`);
   }
 
 

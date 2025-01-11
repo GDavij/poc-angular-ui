@@ -1,12 +1,26 @@
 <section class="flex gap-2 mb-6">
-    <Button className="bg-secondary-accent">Return</Button>
+    <UiButton >Voltar</UiButton>
     <div class="flex flex-col gap-2">
         <h1 class="text-primary-accent font-semibold text-4xl"> Members - List </h1>
     </div>
 </section>
 
-<section class="w-full h-20">
-    <Table [tableDefinition]="tableDefinition" [headerRef]="headerTemplate" [bodyRef]="bodyTemplate">
+<form class="w-full bg-white shadow-md my-6 py-4 px-4" [formGroup]="form">
+    <div class="flex flex-row gap-2 items-end">
+        <InputWrapper className="flex-1" label="Telefone">
+                <UiInput controlName="phone" formControlName="phone" />
+        </InputWrapper>
+
+        <InputWrapper className="flex-1" label="E-mail">
+            <UiInput controlName="email" formControlName="email"/>
+        </InputWrapper>
+        
+        <UiButton (click)="searchForMembers()" className="min-w-48" [loading]="isSearchingForMembers" [disabled]="isSearchingForMembers || form.invalid">Pesquisar</UiButton>
+    </div>
+</form>
+
+<section class="w-full flex justify-center h-20">
+    <UiTable [tableDefinition]="tableDefinition" [headerRef]="headerTemplate" [bodyRef]="bodyTemplate">
         <ng-template #headerTemplate let-headers="headers">
             <TableHeader [headers]="headers" [headerCell]="HeaderCellTemplate">
                 
@@ -43,7 +57,7 @@
             </TableBody>
        </ng-template>
 
-    </Table>
+    </UiTable>
 
     
 </section>

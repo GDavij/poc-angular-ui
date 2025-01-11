@@ -1,4 +1,4 @@
-<tbody [class]="tailwindService.merge('', className)">
+<tbody [class]="tailwindService.merge('w-full flex flex-shrink-0 flex-grow flex-col', className)">
     <ng-container *ngFor="let row of rows">
         <ng-container *ngTemplateOutlet="rowRef; context: { row: row }"/>
     </ng-container>

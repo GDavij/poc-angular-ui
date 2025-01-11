@@ -1,0 +1,4 @@
+<span>{{ label }}</span>
+<label [class]="tailwindService.merge('flex flex-col bg-white border-2 rounded-md border-primary-accent hover:border-secondary-accent transition-all', className)">
+    <ng-content/>
+</label>

@@ -4,7 +4,7 @@ import { TailwindService } from '../../services/tailwind.service';
 import { TableDefintion } from './table.models';
 
 @Component({
-  selector: 'Table',
+  selector: 'UiTable',
   standalone: true,
   imports: [NgTemplateOutlet, CommonModule],
   templateUrl: './table.component.html',

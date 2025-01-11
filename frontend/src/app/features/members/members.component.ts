@@ -1,71 +1,108 @@
-import { Component, OnInit } from '@angular/core';
-import { ButtonComponent } from "../../components/button/button.component";
+import { Component, Input, OnInit } from '@angular/core';
+import { ButtonComponent } from '../../components/button/button.component';
 import { TableComponent } from '../../components/table/table.component';
 import { TableDefintion } from '../../components/table/table.models';
-import { TableHeaderComponent } from "../../components/table/table-header/table-header.component";
+import { TableHeaderComponent } from '../../components/table/table-header/table-header.component';
 import { CommonModule } from '@angular/common';
-import { TableCellComponent } from "../../components/table/table-cell/table-cell.component";
+import { TableCellComponent } from '../../components/table/table-cell/table-cell.component';
 import { TableBodyComponent } from '../../components/table/table-body/table-body.component';
 import { TableRowComponent } from '../../components/table/table-row/table-row.component';
 import { Member } from '../../models/members';
 import { MembersService } from '../../services/members/members.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { ExampleMemberModalComponent } from './example-member-modal/example-member-modal.component';
+import { InputWrapperComponent } from '../../components/input-wrapper/input-wrapper.component';
+import { UiInputComponent } from '../../components/input/input.component';
+import { catchError, debounce, debounceTime, finalize, of, retry } from 'rxjs';
 
 @Component({
   selector: 'app-members',
-  imports: [ButtonComponent,
-            TableComponent,
-            TableHeaderComponent,
-            CommonModule,
-            TableCellComponent,
-            TableBodyComponent,
-            TableRowComponent,
-            DialogModule],
+  imports: [
+    TableComponent,
+    TableHeaderComponent,
+    TableBodyComponent,
+    TableRowComponent,
+    TableCellComponent,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DialogModule,
+    InputWrapperComponent,
+    UiInputComponent,
+    ButtonComponent,
+  ],
   templateUrl: './members.component.html',
-  styleUrl: './members.component.scss'
+  styleUrl: './members.component.scss',
 })
-export class MembersComponent implements OnInit{
+export class MembersComponent implements OnInit {
   tableDefinition = this.renderTable();
 
-  form!: FormGroup
+  form!: FormGroup;
+  isSearchingForMembers: boolean = false;
 
-
-  constructor(private readonly _membersService: MembersService,
-              private readonly _fb: FormBuilder,
-              private readonly dialog: Dialog) { }
+  constructor(
+    private readonly _membersService: MembersService,
+    private readonly _fb: FormBuilder,
+    private readonly dialog: Dialog
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
-    this.loadMembers();
+    this.searchForMembers();
   }
 
   createForm() {
     this.form = this._fb.group({
-      name: [''],
-      phone: ['']
+      email: [''],
+      phone: [''],
     });
   }
 
   openInfoModal(row: Member) {
     this.dialog.open(ExampleMemberModalComponent, {
       width: '500px',
-      data: row
+      data: row,
     });
   }
 
-  loadMembers(): void {
-    const { name, phone } = this.form.value;
+  searchForMembers(): void {
+    if (this.form.invalid || this.isSearchingForMembers) {
+      return;
+    }
+
+    const { email, phone } = this.form.value;
 
     const { page, pageSize } = this.tableDefinition.paginator;
-    this._membersService.list(name, phone, page, pageSize).subscribe(result => {
-      const {data} = result;
-      this.tableDefinition.body = data.items;
-      this.tableDefinition.paginator.totalItems = data.count;
-      this.tableDefinition.paginator.page = data.page;
-      console.log({data});
-    });
+    this.isSearchingForMembers = true;
+
+    this._membersService
+      .list(email, phone, page, pageSize)
+      .pipe(
+        debounceTime(500),
+        retry(3),
+        catchError((_) => {
+          return of();
+        }),
+        finalize(() => {
+          setTimeout(() => {
+
+            this.isSearchingForMembers = false;
+          }, 500);
+        })
+      )
+      .subscribe((result) => {
+        const { data } = result;
+        this.tableDefinition.body = data.items;
+        this.tableDefinition.paginator.totalItems = data.count;
+        this.tableDefinition.paginator.page = data.page;
+        console.log({ data });
+      });
   }
 
   private renderTable(): TableDefintion<Member> {
@@ -73,15 +110,15 @@ export class MembersComponent implements OnInit{
       headers: [
         {
           property: 'name',
-          label: "Nome",
+          label: 'Nome',
         },
         {
           property: 'email',
-          label: "Email"
+          label: 'Email',
         },
         {
           property: 'phone',
-          label: "Telefone"
+          label: 'Telefone',
         },
       ],
       body: [],
@@ -89,8 +126,8 @@ export class MembersComponent implements OnInit{
         page: 1,
         pageSize: 10,
         pageSizeOptions: [10, 15, 20],
-        totalItems: 0
-      }
-    }
+        totalItems: 0,
+      },
+    };
   }
 }
