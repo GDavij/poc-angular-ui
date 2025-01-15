@@ -1,7 +1,7 @@
 <section class="flex gap-2 mb-6">
-    <UiButton >Voltar</UiButton>
+    <UiButton>Voltar</UiButton>
     <div class="flex flex-col gap-2">
-        <h1 class="text-primary-accent font-semibold text-4xl"> Members - List </h1>
+        <h1 class="text-primary-accent font-semibold text-4xl"> Membros - Listagem </h1>
     </div>
 </section>
 
@@ -43,14 +43,23 @@
        <ng-template #bodyTemplate let-rows="rows">
             <TableBody [rowRef]="rowTemplate" [rows]="rows">
                 <ng-template #rowTemplate let-row="row">
-                    <TableRow (click)="openInfoModal(row)" className="cursor-pointer">
+                    <TableRow>
                         <TableCell [cellRef]="defaultCellTemplate" [cell]="row.name"></TableCell>
                         <TableCell [cellRef]="defaultCellTemplate" [cell]="row.email"></TableCell>
                         <TableCell [cellRef]="defaultCellTemplate" [cell]="row.phone"></TableCell>
+                        <TableCell [cellRef]="actionsCellTemplate" [cell]="row"></TableCell>
 
 
                         <ng-template #defaultCellTemplate let-cell="cell">
                             <span>{{ cell }}</span>
+                        </ng-template>
+
+                        <ng-template #actionsCellTemplate let-cell>
+                            <div class="flex gap-2">
+                                <UiButton (click)="viewMember(row)" className="min-w-24">Visualizar</UiButton>
+                                <UiButton (click)="editMember(row)" className="min-w-24">Editar</UiButton>
+
+                            </div>
                         </ng-template>
                     </TableRow>
                 </ng-template>

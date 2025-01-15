@@ -16,10 +16,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
-import { ExampleMemberModalComponent } from './example-member-modal/example-member-modal.component';
+import { ExampleMemberModalComponent } from './view-member-modal/example-member-modal.component';
 import { InputWrapperComponent } from '../../components/input-wrapper/input-wrapper.component';
 import { UiInputComponent } from '../../components/input/input.component';
-import { catchError, debounce, debounceTime, finalize, of, retry } from 'rxjs';
+import { catchError, debounceTime, finalize, of, retry } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-members',
@@ -49,7 +50,8 @@ export class MembersComponent implements OnInit {
   constructor(
     private readonly _membersService: MembersService,
     private readonly _fb: FormBuilder,
-    private readonly dialog: Dialog
+    private readonly _dialog: Dialog,
+    private readonly _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -64,11 +66,15 @@ export class MembersComponent implements OnInit {
     });
   }
 
-  openInfoModal(row: Member) {
-    this.dialog.open(ExampleMemberModalComponent, {
+  viewMember(row: Member) {
+    this._dialog.open(ExampleMemberModalComponent, {
       width: '500px',
       data: row,
     });
+  }
+
+  editMember(row: Member) {
+    this._router.navigate(['/members','edit', row.id]);
   }
 
   searchForMembers(): void {
@@ -128,6 +134,14 @@ export class MembersComponent implements OnInit {
         pageSizeOptions: [10, 15, 20],
         totalItems: 0,
       },
+      actions: {
+        label: "Ações",
+        view: {
+          active: true
+        },
+        delete: false,
+        update: false
+      }
     };
   }
 }

@@ -1,7 +1,10 @@
+import { TemplateRef } from "@angular/core";
+
 export type TableDefintion<T> = {
     headers: TableHeaderDefinition<T>[];
     body: T[];
     paginator: TablePaginator;
+    actions: TableActionsDefinition | false;
 }
 
 export type TableHeaderDefinition<T> = {
@@ -14,4 +17,20 @@ export type TablePaginator = {
     pageSize: number;
     totalItems: number;
     pageSizeOptions: number[];
+}
+
+export type TableActionsDefinition = {
+    label: string;
+    view: {
+        active: boolean;
+        render?: TemplateRef<any>
+    } | false;
+    update: {
+        active: boolean;
+        render?: TemplateRef<any>;
+    } | false;
+    delete: {
+        active: boolean;
+        render?: TemplateRef<any>
+    } | false;
 }
