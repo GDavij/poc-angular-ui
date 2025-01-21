@@ -21,8 +21,8 @@ export function updateMemberController(req: FastifyRequest, res: FastifyReply) {
 
     const success = repository.save(member);
     if (success) {
-        return res.status(202).send(HttpResult.success(202, member));
+        return res.status(202).send(HttpResult.success(member));
     }
 
-    return res.status(500).send(HttpResult.fails(500, "Erro ao salvar membro"));
+    return res.status(500).send(HttpResult.fails("Erro ao salvar membro"));
 }

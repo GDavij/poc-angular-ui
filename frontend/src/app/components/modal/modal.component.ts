@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { Component, inject, Inject } from '@angular/core';
 
 @Component({
   selector: 'Modal',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
+  dialogRef = inject(DialogRef<any>);
 
+  close() {
+    this.dialogRef.close();
+  }
 }

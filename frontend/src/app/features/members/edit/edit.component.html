@@ -1,13 +1,17 @@
-<section class="flex gap-2 mb-6">
-    <UiButton>Voltar</UiButton>
+<section class="flex gap-2 mb-6 motion-preset-slide-up-lg">
+    <UiButton (click)="back()">Voltar</UiButton>
     <div class="flex flex-col gap-2">
-        <h1 class="text-primary-accent font-semibold text-4xl"> Membros - Listagem </h1>
+        <h1 class="text-primary-accent font-semibold text-4xl"> Membros - Edição </h1>
     </div>
 </section>
 
 
-<form class="w-full bg-white shadow-md my-6 py-4 px-4" [formGroup]="form">
+<form class="w-full bg-white shadow-md my-6 py-4 px-4 motion-preset-slide-up-lg" [formGroup]="form">
     <div class="flex flex-row gap-2 items-end">
+        <InputWrapper className="flex-1" label="Nome">
+                <UiInput controlName="name" formControlName="name" />
+        </InputWrapper>
+        
         <InputWrapper className="flex-1" label="Telefone">
                 <UiInput controlName="phone" formControlName="phone" />
         </InputWrapper>
@@ -16,6 +20,6 @@
             <UiInput controlName="email" formControlName="email"/>
         </InputWrapper>
         
-        <!-- <UiButton (click)="searchForMembers()" className="min-w-48" [loading]="isSearchingForMembers" [disabled]="isSearchingForMembers || form.invalid">Pesquisar</UiButton> -->
+        <UiButton className="min-w-48" (click)="save()" >{{ isUpdating ? "Alterar" : "Criar" }}</UiButton>
     </div>
 </form>

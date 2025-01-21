@@ -1,0 +1,28 @@
+<button (click)="toggle()" type="button" cdkOverlayOrigin #treeTrigger="cdkOverlayOrigin">
+    <TreeNode className="flex justify-between items-center gap-4">
+        <span>
+            {{ tree.name}} 
+        </span>
+
+        @if (isOpen) {
+            <ng-icon name="matChevronLeft" class="motion-rotate-out-[-90deg] motion-duration-100"/> 
+        } @else {
+            <ng-icon name="matChevronLeft" class="motion-rotate-in-[-90deg] motion-duration-100"/>
+        }
+    </TreeNode>
+</button>
+
+
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="treeTrigger" [cdkConnectedOverlayOpen]="isOpen"
+    (detach)="close()" (overlayOutsideClick)="close()">
+    <div class="flex flex-col border translate-y-3 border-t-primary-accent border-slate-100 rounded-md bg-white shadow-md p-4 min-w-40 items-center motion-preset-slide-down motion-duration-300 gap-4">
+
+        @for(node of tree.nodes; track node.name) {
+            @if (node.nodes && node.nodes.length > 0) {
+                <Tree [tree]="node" [treeNodeView]="treeNodeView" [closeEventEmmiter]="closeEventEmmiter" />
+            } @else {
+                <ng-template *ngTemplateOutlet="treeNodeView; context: { $implicit: node }"></ng-template>
+            }
+        }
+    </div>
+</ng-template>

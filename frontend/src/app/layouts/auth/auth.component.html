@@ -1,7 +1,20 @@
-<header class="w-full h-16 bg-white mb-6 shadow-md motion-preset-slide-down-md">
+<header class="w-full h-16 bg-white mb-6 shadow-md motion-preset-slide-down-md flex justify-between">
+    <div class="flex justify-center w-full items-center">
 
+        <Tree [tree]="treeDef" [treeNodeView]="treeNodeTemplate" [closeEventEmmiter]="closeEventEmmiter">
+            <ng-template #treeNodeTemplate let-node>
+                <TreeNode (click)="node.action(); closeEventEmmiter.next()" className="w-60">
+                        {{ node.name }}
+                </TreeNode>
+            </ng-template>
+        </Tree>
+    </div>
+
+    <div class="flex min-w-32 justify-start items-center">
+        <span>Avatar</span>
+    </div>
 </header>
 
-<main class="px-4 flex motion-preset-slide-up-lg">
+<main class="px-4 flex">
     <router-outlet/>
 </main>

@@ -9,6 +9,8 @@ import { DIALOG_DATA } from '@angular/cdk/dialog';
   templateUrl: './example-member-modal.component.html',
   styleUrl: './example-member-modal.component.scss'
 })
-export class ExampleMemberModalComponent {
+export class ExampleMemberModalComponent extends ModalComponent {
   member: Member = inject(DIALOG_DATA);
+
+
 }

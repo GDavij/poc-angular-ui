@@ -73,6 +73,10 @@ export class MembersComponent implements OnInit {
     });
   }
 
+  createMember() {
+    this._router.navigate(['/members', 'new']);
+  }
+
   editMember(row: Member) {
     this._router.navigate(['/members','edit', row.id]);
   }
