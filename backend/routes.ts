@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import {membersRoutes} from '@features/members/members.routes';
+import {membersRoutes} from '@features/membership/members.routes';
 
 
 export function registerRoutes(fastify: FastifyInstance) {

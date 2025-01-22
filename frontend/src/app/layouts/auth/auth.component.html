@@ -3,7 +3,7 @@
 
         <Tree [tree]="treeDef" [treeNodeView]="treeNodeTemplate" [closeEventEmmiter]="closeEventEmmiter">
             <ng-template #treeNodeTemplate let-node>
-                <TreeNode (click)="node.action(); closeEventEmmiter.next()" className="w-60">
+                <TreeNode (click)="node.action(); closeEventEmmiter.next()" className="w-60 border-none">
                         {{ node.name }}
                 </TreeNode>
             </ng-template>
