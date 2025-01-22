@@ -1,4 +1,4 @@
-<table [class]="tailwindService.merge('min-w-full flex-grow-1 flex-shrink-0 container min-h-8 bg-white shadow-md rounded-md flex flex-col px-2 py-4 w-full', className)">
+<table [class]="tailwindService.merge('min-w-full flex-grow-1 flex-shrink-0 container min-h-8 bg-white shadow-md rounded-md flex flex-col px-2 py-4 w-full overflow-auto', className)">
       <ng-container *ngTemplateOutlet="headerRef; context: { headers: this.headers }"></ng-container>
     
       <div class="w-full h-[0.2rem] my-2 bg-primary-accent rounded-md"></div>

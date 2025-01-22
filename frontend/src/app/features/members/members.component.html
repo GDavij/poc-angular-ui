@@ -1,18 +1,18 @@
-<section class="flex mb-6 motion-preset-slide-up-lg justify-between">
-    <div class="flex gap-2 " >
-        <UiButton>Voltar</UiButton>
+<section class="flex mb-6 gap-4 motion-preset-slide-up-lg justify-between flex-col">
+    <div class="flex gap-2 flex-wrap sm:flex-nowrap" >
+        <UiButton className="w-full sm:w-48">Voltar</UiButton>
         <div class="flex flex-col gap-2">
-            <h1 class="text-primary-accent font-semibold text-4xl"> Membros - Listagem </h1>
+            <h1 class="text-primary-accent font-semibold md:text-4xl text-2xl"> Membros - Listagem </h1>
         </div>
     </div>
 
-    <div>
-        <UiButton (click)="createMember()">Novo Membro</UiButton>
+    <div class="w-full flex sm:justify-end justify-center">
+        <UiButton className="sm:w-48 w-80" (click)="createMember()">Novo Membro</UiButton>
     </div>
 </section>
 
 <form class="w-full bg-white shadow-md my-6 py-4 px-4 motion-preset-slide-up-lg flex flex-col gap-4" [formGroup]="form">
-    <div class="flex flex-row gap-2 items-end">
+    <div class="flex flex-wrap flex-row gap-2 items-end">
         <InputWrapper className="flex-1" label="Telefone">
                 <UiInput controlName="phone" formControlName="phone" />
         </InputWrapper>
@@ -23,8 +23,9 @@
         
     </div>
 
-    <div class="flex flex-row gap-2 items-end justify-end">
-        <UiButton (click)="searchForMembers()" className="min-w-48" [loading]="isSearchingForMembers" [disabled]="isSearchingForMembers || form.invalid">Pesquisar</UiButton>
+    <div class="flex flex-row gap-2 items-end sm:justify-end flex-wrap justify-center">
+        <UiButton (click)="clearForm()" className="sm:min-w-48 bg-secondary-accent min-w-80" [disabled]="isSearchingForMembers || form.invalid">Limpar</UiButton>
+        <UiButton (click)="searchForMembers()" className="sm:min-w-48 min-w-80" [loading]="isSearchingForMembers" [disabled]="isSearchingForMembers || form.invalid">Pesquisar</UiButton>
     </div>
 </form>
 

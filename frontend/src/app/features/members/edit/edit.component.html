@@ -1,25 +1,34 @@
-<section class="flex gap-2 mb-6 motion-preset-slide-up-lg">
+<section class="flex flex-col gap-2 mb-6 motion-preset-slide-up-lg">
     <UiButton (click)="back()">Voltar</UiButton>
     <div class="flex flex-col gap-2">
         <h1 class="text-primary-accent font-semibold text-4xl"> Membros - Edição </h1>
     </div>
 </section>
 
-
-<form class="w-full bg-white shadow-md my-6 py-4 px-4 motion-preset-slide-up-lg" [formGroup]="form">
-    <div class="flex flex-row gap-2 items-end">
-        <InputWrapper className="flex-1" label="Nome">
-                <UiInput controlName="name" formControlName="name" />
-        </InputWrapper>
-        
-        <InputWrapper className="flex-1" label="Telefone">
-                <UiInput controlName="phone" formControlName="phone" />
-        </InputWrapper>
-
-        <InputWrapper className="flex-1" label="E-mail">
-            <UiInput controlName="email" formControlName="email"/>
-        </InputWrapper>
-        
-        <UiButton className="min-w-48" (click)="save()" >{{ isUpdating ? "Alterar" : "Criar" }}</UiButton>
+    
+<form class="flex flex-col justify-end w-full" [formGroup]="form" (submit)="save()">
+    <div class="flex w-full justify-end motion-preset-slide-up-lg">
+        <div class="sm:w-32 w-full">
+            <UiButton className="w-full" [disabled]="isSaving" [loading]="isSaving" [disabled]="form.invalid">{{ isUpdating ? "Alterar" : "Salvar" }}</UiButton>
+        </div>
     </div>
+    <div class="w-full bg-white shadow-md my-6 py-4 px-4 flex flex-col items-start gap-4 motion-preset-slide-up-lg">
+
+        <div class="flex sm:flex-row flex-col gap-2 items-start">
+            <InputWrapper className="flex-1" label="Nome" [control]="form.get('name')" [errorMessage]="nameErrorMessages"> <!-- Exemplificar customização -->
+                <UiInput controlName="name" formControlName="name" placeholder="John doe" />
+            </InputWrapper>
+            
+            <InputWrapper className="flex-1" label="Telefone" [control]="form.get('phone')" [errorMessage]="phoneErrorMessages">
+                <UiInput controlName="phone" formControlName="phone" placeholder="+55 (12) 887125-5123" />
+            </InputWrapper>
+        </div>
+        <div class="flex flex-row gap-2 items-start">
+
+            <InputWrapper className="flex-1" label="E-mail" [control]="form.get('email')" [errorMessage]="emailErrorMessages">
+                <UiInput controlName="email" formControlName="email" placeholder="johndoe@email.com"/>
+            </InputWrapper>
+        </div>       
+    </div>
+
 </form>

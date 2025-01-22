@@ -17,6 +17,7 @@ import { TailwindService } from '../../services/tailwind.service';
 export class UiInputComponent implements ControlValueAccessor {
   @Input() className: string = '';
   @Input() formControlName: string = '';
+  @Input() placeholder: string = '';
 
   value: string = '';
   onChange: any = () => {};

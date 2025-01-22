@@ -1,4 +1,11 @@
-<span>{{ label }}</span>
-<label [class]="tailwindService.merge('flex flex-col bg-white border-2 rounded-md border-primary-accent hover:border-secondary-accent transition-all', className)">
-    <ng-content/>
+<label>
+    <span>{{ label }}</span>
+    <div [class]="tailwindService.merge('flex flex-col min-w-80 bg-white border-2 rounded-md border-primary-accent hover:border-secondary-accent transition-all', className)">
+        <ng-content/>
+    </div>
+    <div class="h-4">
+        @if (error) {
+            <span class="text-red-500 font-semibold text-sm motion-preset-slide-right-sm motion-duration-500 flex">{{ error }}</span>
+        }
+    </div>
 </label>

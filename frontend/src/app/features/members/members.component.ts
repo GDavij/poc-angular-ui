@@ -66,6 +66,10 @@ export class MembersComponent implements OnInit {
     });
   }
 
+  clearForm() {
+    this.form.reset();
+  }
+
   viewMember(row: Member) {
     this._dialog.open(ExampleMemberModalComponent, {
       width: '500px',
@@ -96,7 +100,8 @@ export class MembersComponent implements OnInit {
       .pipe(
         debounceTime(500),
         retry(3),
-        catchError((_) => {
+        catchError((error) => {
+          console.log({error})
           return of();
         }),
         finalize(() => {

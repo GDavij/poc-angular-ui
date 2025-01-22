@@ -1,4 +1,4 @@
-<header class="w-full h-16 bg-white mb-6 shadow-md motion-preset-slide-down-md flex justify-between">
+<header class="w-full h-16 bg-white mb-6 shadow-md motion-preset-slide-down-md flex justify-between fixed top-0 z-50">
     <div class="flex justify-center w-full items-center">
 
         <Tree [tree]="treeDef" [treeNodeView]="treeNodeTemplate" [closeEventEmmiter]="closeEventEmmiter">
@@ -15,6 +15,6 @@
     </div>
 </header>
 
-<main class="px-4 flex">
+<main class="px-4 flex mt-20">
     <router-outlet/>
 </main>
