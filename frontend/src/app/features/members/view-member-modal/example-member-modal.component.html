@@ -1,21 +1,80 @@
 <Modal>
     <section header class="flex justify-between items-center">
-        <h1 class="text-2xl text-slate-800 font-semibold">Member Info</h1>
+        <h1 class="text-2xl text-slate-800 font-semibold">Membro - Detalhes</h1>
         <button class="flex bg-transparent justify-center items-center text-red-950 hover:text-red-500 text-2xl font-semibold" (click)="close()">X</button>
     </section>
 
-    <section body class="flex flex-col">
-        <div class="flex gap-2">
-            <span>Nome: </span>
-            <span>{{ member.name }}</span>
-        </div>
-        <div class="flex gap-2">
-            <span>Email: </span>
-            <span>{{ member.email }}</span>
-        </div>
-        <div class="flex gap-2">
-            <span>Phone: </span>
-            <span>{{ member.phone }}</span>
+    <section body class="flex flex-col gap-6">
+        <div class="flex flex-col mt-4">
+            <InputWrapper label="Nome">
+                <UiInput [disabled]="true" [ngModel]="member.name"/>
+            </InputWrapper>
+
+            <InputWrapper label="E-mail">
+                <UiInput [disabled]="true" [ngModel]="member.email"/>
+            </InputWrapper>
+
+            <InputWrapper label="Telefone">
+                <UiInput [disabled]="true" [ngModel]="member.phone"/>
+            </InputWrapper>
+
+            <span class="w-full h-[2px] bg-slate-200 rounded-lg my-4"></span>
+
+            <section bookings>
+                <div class="flex flex-col">
+                    <h4 class="text-xl text-slate-600"> Reservas Recentes </h4>
+                    <span class="w-full h-[4px] rounded-lg bg-primary-accent"></span>
+                </div>
+
+                @if (isLoadingBorrowRecords) {
+
+                } @else {
+
+                    <UiTable [bodyRef]="bookingsBody" [headerRef]="bookingsHeader" [tableDefinition]="borrowRecordsTable">
+                        <ng-template #bookingsHeader let-header>
+                            <TableHeader [headerCell]="headerCell">
+                                <ng-template #headerCell let-cell>
+                                    <TableCell [cell]="cell" [cellRef]="cellTemplate">
+                                    <ng-template #cellTemplate let-header>
+                                        <span>{{ header }}</span>
+                                    </ng-template>
+                                </TableCell>
+                            </ng-template>
+                        </TableHeader>
+                    </ng-template>
+                    
+                    <ng-template #bookingsBody let-rows>
+                        <TableBody [rows]="rows" [rowRef]="rowTemplate">
+                            <ng-template #rowTemplate let-row>
+                                <TableRow>
+                                    <TableCell [cell]="row.bookTitle" [cellRef]="cellTemplate"/>
+                                    <TableCell [cell]="row.bookAuthor" [cellRef]="cellTemplate"/>
+                                    <TableCell [cell]="row.genre" [cellRef]="cellTemplate"/>
+                                    <TableCell [cell]="row.publishedYear" [cellRef]="cellTemplate"/>
+                                    <TableCell [cell]="row.borrowAt" [cellRef]="cellTemplate"/>
+                                    <TableCell [cell]="row.returnAt" [cellRef]="cellTemplate"/>
+                                    <TableCell [cell]="row" [cellRef]="actionsCellTemplate"/>
+                                    
+                                    <ng-template #cellTemplate let-cell>
+                                            <span>{{ cell }}</span>
+                                        </ng-template>
+
+                                        <ng-template #actionsCellTemplate let-cell>
+                            <div class="flex gap-2">
+                                <UiButton className="min-w-24">Visualizar</UiButton>
+
+                            </div>
+                        </ng-template>
+                                    </TableRow>
+                                </ng-template>
+                                
+                            </TableBody>
+                    </ng-template>
+                </UiTable>
+            }
+            </section>
+
+
         </div>
     </section>
 </Modal>

@@ -1,5 +1,4 @@
 import { Component, inject, Input } from '@angular/core';
-import { twMerge } from 'tailwind-merge';
 import { TailwindService } from '../../services/tailwind.service';
 
 @Component({
@@ -11,6 +10,7 @@ import { TailwindService } from '../../services/tailwind.service';
 export class ButtonComponent {
   readonly tailwindService = inject(TailwindService);
 
+  @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() className: string = '';
   @Input() loading: boolean = false;
   @Input() disabled: boolean = false;

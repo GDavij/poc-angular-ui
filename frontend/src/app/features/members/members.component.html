@@ -2,7 +2,7 @@
     <div class="flex gap-2 flex-wrap sm:flex-nowrap" >
         <UiButton className="w-full sm:w-48">Voltar</UiButton>
         <div class="flex flex-col gap-2">
-            <h1 class="text-primary-accent font-semibold md:text-4xl text-2xl"> Membros - Listagem </h1>
+            <h1 class="text-primary-accent font-semibold md:text-4xl text-2xl"> Membros - Listar </h1>
         </div>
     </div>
 
@@ -25,7 +25,7 @@
 
     <div class="flex flex-row gap-2 items-end sm:justify-end flex-wrap justify-center">
         <UiButton (click)="clearForm()" className="sm:min-w-48 bg-secondary-accent min-w-80" [disabled]="isSearchingForMembers || form.invalid">Limpar</UiButton>
-        <UiButton (click)="searchForMembers()" className="sm:min-w-48 min-w-80" [loading]="isSearchingForMembers" [disabled]="isSearchingForMembers || form.invalid">Pesquisar</UiButton>
+        <UiButton type="submit" (click)="searchForMembers()" className="sm:min-w-48 min-w-80" [loading]="isSearchingForMembers" [disabled]="isSearchingForMembers || form.invalid">Pesquisar</UiButton>
     </div>
 </form>
 

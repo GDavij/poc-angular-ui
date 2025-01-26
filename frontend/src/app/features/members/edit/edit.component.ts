@@ -43,9 +43,11 @@ import { ErrorModalComponent } from '../../../components/modal/error-modal/error
 })
 export class EditComponent implements OnInit {
   private _id!: string | null;
+  private _member: Member | null = null;
 
   form!: FormGroup;
   isSaving: boolean = false;
+
 
   public constructor(
     private readonly _fb: FormBuilder,
@@ -100,6 +102,15 @@ export class EditComponent implements OnInit {
     });
   }
 
+  clearForm() {
+    if (this._member) {
+      this.loadForm(this._member);
+      return;
+    }
+
+    this.form.reset();
+  }
+
   nameErrorMessages(control: AbstractControl<any, any>) {
     if (control.hasError('required')) {
       return 'Nome é obrigatório';
@@ -147,7 +158,10 @@ export class EditComponent implements OnInit {
         retry(3),
         catchError((err) => of())
       )
-      .subscribe((member) => this.loadForm(member.data));
+      .subscribe((member) => {
+        this.loadForm(member.data)
+        this._member = member.data;
+      });
   }
 
   save() {

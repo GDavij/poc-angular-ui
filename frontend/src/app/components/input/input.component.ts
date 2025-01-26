@@ -18,6 +18,7 @@ export class UiInputComponent implements ControlValueAccessor {
   @Input() className: string = '';
   @Input() formControlName: string = '';
   @Input() placeholder: string = '';
+  @Input() disabled: boolean = false;
 
   value: string = '';
   onChange: any = () => {};
@@ -38,7 +39,7 @@ export class UiInputComponent implements ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    // Handle the disabled state if needed
+    this.disabled = isDisabled;
   }
 
   onInput(event: Event): void {

@@ -1,4 +1,5 @@
-<input [class]="tailwindService.merge('w-full h-full bg-transparent border-transparent border-none text-md px-4 py-2 focus:shadow-inner outline-none focus:bg-slate-100 rounded-md transition-all', className)"
+<input [disabled]="disabled"
+       [class]="tailwindService.merge('w-full h-full bg-transparent border-transparent border-none text-md px-4 py-2 focus:shadow-inner outline-none focus:bg-slate-100 rounded-md transition-all disabled:bg-slate-200 disabled:cursor-not-allowed', className)"
        [value]="value"
        (input)="onInput($event)"
        (blur)="onTouched()"

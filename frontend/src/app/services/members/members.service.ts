@@ -30,7 +30,6 @@ export class MembersService {
   }
 
   save(id: string | null, member: Member) {
-    console.log({id, member})
     if (id) {
       return this._httpClient.put<ApiResult<Member>>(
         `${this._baseUrl}/api/members/${id}`,

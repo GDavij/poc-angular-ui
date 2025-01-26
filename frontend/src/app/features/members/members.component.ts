@@ -116,7 +116,6 @@ export class MembersComponent implements OnInit {
         this.tableDefinition.body = data.items;
         this.tableDefinition.paginator.totalItems = data.count;
         this.tableDefinition.paginator.page = data.page;
-        console.log({ data });
       });
   }
 

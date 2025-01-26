@@ -20,7 +20,6 @@ export class InputWrapperComponent {
 
 
   get error() {
-    console.log({touched: this.control?.touched, control: this.control, value: this.control?.value, count: this.control?.value?.length, label: this.label, errorMessage: this.control ? this.errorMessage(this.control) : null});
     if (!this.control?.touched) {
       return '';
     }

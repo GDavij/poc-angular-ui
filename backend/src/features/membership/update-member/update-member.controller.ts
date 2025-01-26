@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { updateMemberSchema } from "./update-member.schema";
 import { MembersRepository } from "../members.repository";
 import { HttpResult } from "@models/results";
+import { Member } from "@models/member";
 
 export function updateMemberController(req: FastifyRequest, res: FastifyReply) {
     const { body: payload, params: {id}} = updateMemberSchema.parse(req);
@@ -17,7 +18,7 @@ export function updateMemberController(req: FastifyRequest, res: FastifyReply) {
         name: payload.name,
         email: payload.email,
         phone: payload.phone,
-    }
+    } as Member;
 
     const success = repository.save(member);
     if (success) {
